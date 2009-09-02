@@ -1,0 +1,105 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>uk.co.paulmoser</groupId>
+    <artifactId>maven-jbehave-selenium-example</artifactId>
+    <version>1.0</version>
+  </parent>
+  <artifactId>maven-jbehave-selenium-exampl-acceptance</artifactId>
+  <packaging>jar</packaging>
+  <name>Acceptance tests</name>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jbehave</groupId>
+        <artifactId>jbehave-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>run-scenarios</id>
+            <phase>integration-test</phase>
+            <configuration>
+              <!--
+                You could list all the scenarios to be run herei using mulitple <scenarioClassName/>
+                elements, but that seems really tedious, everytime you add a new scenario you'd have
+                to modifiy the list.
+                <scenarioClassNames>
+                  <scenarioClassName>some.package.TheScenarioClass</scenarioClassName>
+                  <scenarioClassName>some.other..package.AnotherScenarioClass</scenarioClassName>
+                </scenarioClassNames>
+
+                Alternatively you can, as below, use <scenarioInclude/> to wildcard scenarios to
+                run and <scenarioExclude/> elements to exclude anything that isn't a scenario
+              -->
+              <scenarioIncludes>
+                <!-- Assume everything is a scenario, so if you add one you don't need to modify
+                the list -->
+                <scenarioInclude>**/*.java</scenarioInclude>
+              </scenarioIncludes>
+              <scenarioExcludes>
+                <!-- Exclude files defining steps as they obviously aren't scenarios. If you call
+                all your steps xxxSteps.java then this wildcard will exclude any new steps you
+                create without haiving to modify this list -->
+                <scenarioExclude>**/*Steps.java</scenarioExclude>
+                <!-- Specifically exclude the base class of scenarios as it's not suppose to be
+                run -->
+                <scenarioExclude>**/BaseScenario.java</scenarioExclude>
+                <!-- If you have any helper classes you'd have to exclude them here, you could
+                put them in a package and exclude that so you don't have to modify the list
+                everytime you add a new helper -->
+              </scenarioExcludes>
+              <scope>test</scope>
+            </configuration>
+            <goals>
+              <goal>run-scenarios</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>selenium-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>start</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+                <goal>start-server</goal>
+            </goals>
+            <configuration>
+                <background>true</background>
+            </configuration>
+          </execution>
+        
+          <execution>
+            <id>stop</id>
+            <phase>post-integration-test</phase>
+            <goals>
+                <goal>stop-server</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.jbehave</groupId>
+      <artifactId>jbehave-core</artifactId>
+      <version>2.2.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jbehave.web</groupId>
+      <artifactId>jbehave-web-selenium</artifactId>
+      <version>2.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium.client-drivers</groupId>
+      <artifactId>selenium-java-client-driver</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+  </dependencies>
+</project>

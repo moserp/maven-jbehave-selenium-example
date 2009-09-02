@@ -1,0 +1,4 @@
+Scenario: Searching for a known term
+  Given we are on the Google homepage
+  When we search for "Selenium"
+  Then we should see "Selenium web application testing system"
