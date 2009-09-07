@@ -8,7 +8,7 @@
     <artifactId>maven-jbehave-selenium-example</artifactId>
     <version>1.0</version>
   </parent>
-  <artifactId>maven-jbehave-selenium-exampl-acceptance</artifactId>
+  <artifactId>maven-jbehave-selenium-example-acceptance</artifactId>
   <packaging>jar</packaging>
   <name>Acceptance tests</name>
   <build>
