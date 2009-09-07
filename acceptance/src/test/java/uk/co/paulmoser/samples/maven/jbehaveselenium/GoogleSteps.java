@@ -60,6 +60,11 @@ public class GoogleSteps extends SeleniumSteps {
     assertThat(selenium.getLocation(), is(expectedURL));
   }
 
+  @Then("a screenshot is captured")
+  public void captureScreenshot() {
+    selenium.captureScreenshot("screenshot.png");
+  }
+
   private void waitForPageToLoad() {
     selenium.waitForPageToLoad(pageLoadTimeout);
   }

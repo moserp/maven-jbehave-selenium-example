@@ -13,4 +13,5 @@ Scenario: Searching for JUnit
   When I follow the link "Welcome to JUnit.org! | JUnit.org"
   Then I should see "JUnit.org Resources for Test Driven Development"
   And the URL of the page should be "http://www.junit.org/"
+  And a screenshot is captured
 
