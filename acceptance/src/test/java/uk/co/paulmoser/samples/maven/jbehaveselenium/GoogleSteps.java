@@ -9,6 +9,7 @@ import org.jbehave.web.selenium.SeleniumSteps;
 import org.jbehave.web.selenium.SeleniumStepsConfiguration;
 
 import static org.junit.Assert.assertThat;
+import static org.junit.matchers.JUnitMatchers.*;
 import static org.hamcrest.CoreMatchers.*;
 
 /** 
@@ -21,7 +22,7 @@ import static org.hamcrest.CoreMatchers.*;
  */
 public class GoogleSteps extends SeleniumSteps {
 
-  private String pageLoadTimeout = "3000";
+  private String pageLoadTimeout = "7000";
 
   /**
    *
@@ -30,24 +31,33 @@ public class GoogleSteps extends SeleniumSteps {
     super(configuration);
   }
 
-  @Given("we are on the Google homepage")
+  @Given("I am on the Google homepage")
   public void goToTheGoogleHomepage() {
- //   selenium.open("http://www.google.com/");
     selenium.open("/");
     waitForPageToLoad();
   }
 
-  @When("we search for \"$searchString\"")
+  @When("I search for \"$searchString\"")
   public void searchFor(String searchString) {
     selenium.type("q", searchString);
     selenium.click("btnG");
     waitForPageToLoad();
   }
 
-  @Then("we should see \"$expectedString\"")
-  public void weShouldSee(String expectedString) {
-    waitFor(5);
-    assertThat(selenium.isTextPresent(expectedString), is(true));
+  @When("I follow the link \"$linkText\"")
+  public void followLinkWithText(String linkText) {
+    selenium.click("link="+linkText);
+    waitForPageToLoad();
+  }
+
+  @Then("I should see \"$expectedText\"")
+  public void shouldSee(String expectedText) {
+    assertThat(selenium.getBodyText(), containsString(expectedText));
+  }
+
+  @Then("the URL of the page should be \"$expectedURL\"")
+  public void pageURLShouldBe(String expectedURL) {
+    assertThat(selenium.getLocation(), is(expectedURL));
   }
 
   private void waitForPageToLoad() {

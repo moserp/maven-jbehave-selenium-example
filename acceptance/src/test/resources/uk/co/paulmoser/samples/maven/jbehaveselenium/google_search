@@ -1,4 +1,16 @@
-Scenario: Searching for a known term
-  Given we are on the Google homepage
-  When we search for "Selenium"
-  Then we should see "Selenium web application testing system"
+Scenario: Searching for Selenium
+  Given I am on the Google homepage
+  When I search for "Selenium"
+  Then I should see "Selenium web application testing system"
+  When I follow the link "Selenium web application testing system"
+  Then I should see "Get started with Selenium!"
+  And the URL of the page should be "http://seleniumhq.org/"
+
+Scenario: Searching for JUnit
+  Given I am on the Google homepage
+  When I search for "JUnit"
+  Then I should see "Welcome to JUnit.org! | JUnit.org"
+  When I follow the link "Welcome to JUnit.org! | JUnit.org"
+  Then I should see "JUnit.org Resources for Test Driven Development"
+  And the URL of the page should be "http://www.junit.org/"
+
